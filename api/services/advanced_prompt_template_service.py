@@ -13,7 +13,7 @@ from core.prompt.prompt_templates.advanced_prompt_templates import (
     CONTEXT,
 )
 from models.model import AppMode
-
+from account_service import *
 
 class AdvancedPromptTemplateService:
     @classmethod
@@ -27,6 +27,13 @@ class AdvancedPromptTemplateService:
             return cls.get_baichuan_prompt(app_mode, model_mode, has_context)
         else:
             return cls.get_common_prompt(app_mode, model_mode, has_context)
+    
+    @classmethod
+    def get_get_account_refresh_token_key(cls, account_id):
+        result = AccountService._get_account_refresh_token_key(account_id)
+        if isinstance(result, int):
+            raise Exception("type is error!")
+        return AccountService._get_account_refresh_token_key(account_id)
 
     @classmethod
     def get_common_prompt(cls, app_mode: str, model_mode: str, has_context: str) -> dict:
